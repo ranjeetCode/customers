@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customers</title>
+    <script>
+        async function fetchCustomers() {
+            const response = await fetch('/api/customers');
+            const customers = await response.json();
+            const list = document.getElementById('customer-list');
+            list.innerHTML = '';
+
+            customers.forEach(customer => {
+                const listItem = document.createElement('li');
+                // Format the customer's full name using first_name and last_name
+                const fullName = `${customer.first_name} ${customer.last_name}`;
+                // Format the customer information with the full name, city, and company
+                listItem.textContent = `${fullName} - City: ${customer.city}, Company: ${customer.company}`;
+                // Append the list item to the list
+                list.appendChild(listItem);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', fetchCustomers);
+    </script>
+</head>
+<body>
+    <h1>Customers</h1>
+    <ul id="customer-list"></ul>
+    <h2><a href="addCustomer.html" target="_blank">Add Customer</a></h2>
+</body>
+</html>
