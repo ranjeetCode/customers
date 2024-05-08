@@ -11,7 +11,7 @@ Clone the repo and install the dependencies.
 
 ```bash
 git clone https://github.com/ranjeetCode/customers.git
-cd customers
+cd customers/server
 ```
 
 ```bash
