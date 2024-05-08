@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <title>Add Customer</title>
+    <script>
+        // Function to handle form submission
+        async function handleAddCustomerForm(event) {
+            event.preventDefault(); // Prevent the form from submitting the usual way
+
+            // Get form elements
+            const form = event.target;
+            const id = form.elements['id'].value;
+            const firstName = form.elements['first_name'].value;
+            const lastName = form.elements['last_name'].value;
+            const city = form.elements['city'].value;
+            const company = form.elements['company'].value;
+
+            // Create a customer object to send as a JSON payload
+            const customerData = {
+                id,
+                first_name: firstName,
+                last_name: lastName,
+                city,
+                company,
+            };
+
+            try {
+                // Send a POST request to the API endpoint
+                const response = await fetch('/api/customers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(customerData),
+                });
+
+                // Handle the API response
+                console.log(response);
+                if (response.ok) {
+                    const newCustomer = await response.json();
+                    console.log('Customer added successfully:', newCustomer);
+                    alert('Customer added successfully!');
+
+                    // Clear the form
+                    form.reset();
+                } else {
+                    const errorData = await response.json();
+                    console.error('Error adding customer:', errorData.error);
+                    alert('Error adding customer: ' + errorData.error);
+                }
+            } catch (error) {
+                console.error('Request failed:', error);
+                alert('Request failed: ' + error.message);
+                console.log('Error:', error);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Add Customer</h1>
+
+    <form id="addCustomerForm" onsubmit="handleAddCustomerForm(event)">
+        <!-- Customer ID -->
+        <div>
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" required>
+        </div>
+
+        <!-- First Name -->
+        <div>
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" required>
+        </div>
+
+        <!-- Last Name -->
+        <div>
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required>
+        </div>
+
+        <!-- City -->
+        <div>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
+        </div>
+
+        <!-- Company -->
+        <div>
+            <label for="company">Company:</label>
+            <input type="text" id="company" name="company" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Add Customer</button>
+    </form>
+</body>
+
+</html>
