@@ -11,11 +11,12 @@ Clone the repo and install the dependencies.
 
 ```bash
 git clone https://github.com/ranjeetCode/customers.git
-cd customers/server
+cd customers
 ```
 
 ```bash
 npm install
+cd server
 ```
 
 To start the express server, run the following
